@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A playground to reproduce a memory leak with fluent-ui components",
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "clean": "rimraf dist .parcel-cache"
   },
   "author": "Andrew Stegmaier",
   "license": "ISC",
@@ -14,7 +15,8 @@
     "http-server": "^14.1.1",
     "parcel": "^2.8.3",
     "process": "^0.11.10",
-    "rimraf": "^5.0.1"
+    "rimraf": "^5.0.1",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "@fluentui/react": "^8.109.4",

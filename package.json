@@ -4,7 +4,9 @@
   "description": "A playground to reproduce a memory leak with fluent-ui components",
   "scripts": {
     "start": "parcel src/index.html",
-    "clean": "rimraf dist .parcel-cache"
+    "build": "rimraf dist-prod && parcel build src/index.html --dist-dir dist-prod",
+    "serve": "http-server dist-prod",
+    "clean": "rimraf dist dist-prod .parcel-cache"
   },
   "author": "Andrew Stegmaier",
   "license": "ISC",

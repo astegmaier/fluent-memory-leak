@@ -1,0 +1,45 @@
+diff --git a/node_modules/@fluentui/utilities/lib/useFocusRects.js b/node_modules/@fluentui/utilities/lib/useFocusRects.js
+index 6efe434..c5beca5 100644
+--- a/node_modules/@fluentui/utilities/lib/useFocusRects.js
++++ b/node_modules/@fluentui/utilities/lib/useFocusRects.js
+@@ -16,19 +16,6 @@ function setMountCounters(key, delta) {
+     mountCounters.set(key, newValue);
+     return newValue;
+ }
+-function setCallbackMap(context) {
+-    var callbacks = callbackMap.get(context);
+-    if (callbacks) {
+-        return callbacks;
+-    }
+-    var onMouseDown = function (ev) { return _onMouseDown(ev, context.registeredProviders); };
+-    var onPointerDown = function (ev) { return _onPointerDown(ev, context.registeredProviders); };
+-    var onKeyDown = function (ev) { return _onKeyDown(ev, context.registeredProviders); };
+-    var onKeyUp = function (ev) { return _onKeyUp(ev, context.registeredProviders); };
+-    callbacks = { onMouseDown: onMouseDown, onPointerDown: onPointerDown, onKeyDown: onKeyDown, onKeyUp: onKeyUp };
+-    callbackMap.set(context, callbacks);
+-    return callbacks;
+-}
+ export var FocusRectsContext = React.createContext(undefined);
+ /**
+  * Initializes the logic which:
+@@ -63,7 +50,19 @@ export function useFocusRects(rootRef) {
+         var onKeyUp;
+         if ((_b = context === null || context === void 0 ? void 0 : context.providerRef) === null || _b === void 0 ? void 0 : _b.current) {
+             el = context.providerRef.current;
+-            var callbacks = setCallbackMap(context);
++            var callbacks = function(contextParameter) {
++                var callbacks = callbackMap.get(contextParameter);
++                if (callbacks) {
++                    return callbacks;
++                }
++                var onMouseDown = function (ev) { return _onMouseDown(ev, contextParameter.registeredProviders); };
++                var onPointerDown = function (ev) { return _onPointerDown(ev, contextParameter.registeredProviders); };
++                var onKeyDown = function (ev) { return _onKeyDown(ev, contextParameter.registeredProviders); };
++                var onKeyUp = function (ev) { return _onKeyUp(ev, contextParameter.registeredProviders); };
++                callbacks = { onMouseDown: onMouseDown, onPointerDown: onPointerDown, onKeyDown: onKeyDown, onKeyUp: onKeyUp };
++                callbackMap.set(contextParameter, callbacks);
++                return callbacks;
++            }(context);
+             onMouseDown = callbacks.onMouseDown;
+             onPointerDown = callbacks.onPointerDown;
+             onKeyDown = callbacks.onKeyDown;
